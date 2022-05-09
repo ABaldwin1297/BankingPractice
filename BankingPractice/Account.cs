@@ -52,26 +52,23 @@ using System.Threading.Tasks;
 
 
 
-
-
-namespace BankingPractice {
+namespace Banking {
     internal class Account {
         private static int NextId = 1;
-        private int AcctNbr { get; set; } = 0;
+        public int AcctNbr { get; private set; } = 0;
         public string Name { get; set; } = string.Empty;
-        public decimal Balance { get; set; } = 0;
-
+        public decimal Balance { get; private set; } = 0;
         public bool Deposit(decimal Amount) {
-            if (Amount < 0) {
-                Console.WriteLine("Amount cannot be < $0");
+            if (Amount <= 0) {
+                Console.WriteLine($"Amount must be > $0");
                 return false;
             }
             Balance = Balance + Amount;
             return true;
         }
         public bool Withdraw(decimal Amount) {
-            if(Amount < 0) {
-                Console.WriteLine("Amount must be > $0");
+            if(Amount > Balance) {
+                Console.WriteLine("Insufficient Funds");
                 return false;
             }
             Balance = Balance - Amount;
@@ -83,7 +80,7 @@ namespace BankingPractice {
                 ToAccount.Deposit(Amount);
                 return true;
             }
+            return false;
         }
-
     }
 }
